@@ -15,7 +15,7 @@ class TrexisApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserPreferencesPage(),
+      home: UsersListPage(),
     );
   }
 }
