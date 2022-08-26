@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_trexis_app/models/post_typicode.dart';
 import 'package:flutter_trexis_app/models/user_mocki.dart';
 import 'package:flutter_trexis_app/network/users_list_network_call.dart';
 
@@ -13,14 +14,20 @@ class UsersListPage extends StatefulWidget {
 class _UsersListPageState extends State<UsersListPage> {
   final _usersService = UsersService();
   List<UserMocki>? _response;
+  PostTypicode? _postResponse;
 
   void _getUsersList() async {
-    print('before response');
     final response = await _usersService.makeRequestToApi();
     setState(() {
       _response = response;
     });
-    print('after response ');
+  }
+
+  void _postAPost() async {
+    final response = await _usersService.makePostRequestAPost();
+    setState(() {
+      _postResponse = response;
+    });
   }
 
   @override
@@ -80,9 +87,23 @@ class _UsersListPageState extends State<UsersListPage> {
                 );
               });
         } else {
-          return ElevatedButton(
-            onPressed: _getUsersList,
-            child: Text('Make a Request!'),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _getUsersList,
+                child: Text('Make a GET Request!'),
+              ),
+              ElevatedButton(
+                onPressed: _postAPost,
+                child: Text('Make a POST Request!'),
+              ),
+              Builder(builder: (_) {
+                if (_postResponse != null) {
+                  return Text('Post Response is ${_postResponse!.toString()}');
+                } else return Text('No Post Response');
+              })
+            ],
           );
         }
       })),

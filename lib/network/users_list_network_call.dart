@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_trexis_app/models/post_typicode.dart';
 import 'package:flutter_trexis_app/models/user_mocki.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class UsersService {
   Future<List<UserMocki>> makeRequestToApi() async {
@@ -14,5 +14,18 @@ class UsersService {
     var usersResponse = UserMockiResponse.fromJson(json);
 
     return usersResponse.users;
+  }
+
+  Future<PostTypicode> makePostRequestAPost() async {
+    var url = Uri.https("jsonplaceholder.typicode.com", "/posts");
+    var response = await http.post(url, body: {
+      'title': 'Trexis',
+      'body': 'Sample Post Request',
+      'userId': '8',
+    });
+
+    final json = jsonDecode(response.body);
+
+    return PostTypicode.fromJson(json);
   }
 }
