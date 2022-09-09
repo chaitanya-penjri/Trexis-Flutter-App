@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trexis_app/job_home_page.dart';
+import 'package:flutter_trexis_app/list_grid_tabs_page.dart';
 import 'package:flutter_trexis_app/login_page.dart';
 import 'package:flutter_trexis_app/user_preferences_page.dart';
 import 'package:flutter_trexis_app/users_list_network_page.dart';
@@ -15,7 +16,7 @@ class TrexisApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UsersListPage(),
+      home: ListGridTabsPage(),
     );
   }
 }
