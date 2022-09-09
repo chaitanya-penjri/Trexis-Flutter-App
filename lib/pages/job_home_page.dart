@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_trexis_app/views/lunch_learn_program_card.dart';
 import 'package:flutter_trexis_app/views/recent_lunch_learn_program_card.dart';
 
-import 'models/lunch_learn_program.dart';
+import '../models/lunch_learn_program.dart';
 
 class JobHomePage extends StatelessWidget {
   JobHomePage({Key? key}) : super(key: key);

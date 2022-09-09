@@ -15,8 +15,6 @@ class _LoginPageState extends State<LoginPage> {
     final _emailInput = TextEditingController();
     final _passwordInput = TextEditingController();
 
-    final int number = 4;
-
     void _signIn() {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("asdf"))
