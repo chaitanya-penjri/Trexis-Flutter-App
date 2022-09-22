@@ -6,7 +6,6 @@ class UserMockiResponse {
   UserMockiResponse({required this.users});
 
   factory UserMockiResponse.fromJson(dynamic json) {
-    print(json);
     var users = json as List;
     return UserMockiResponse(users: users.map((u) => UserMocki.fromJson(u)).toList());
   }

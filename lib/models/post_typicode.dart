@@ -16,7 +16,7 @@ class PostTypicode {
       id: json['id']! as int,
       title: json['title']! as String,
       body: json['body']! as String,
-      userId: int.parse(json['userId']!),
+      userId: json['userId']! as int,
     );
   }
 
