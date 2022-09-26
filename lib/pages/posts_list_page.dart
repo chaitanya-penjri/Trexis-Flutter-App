@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_trexis_app/models/post_typicode.dart';
-import 'package:flutter_trexis_app/network/posts_list_cubit.dart';
+import 'package:flutter_trexis_app/network/posts_list_bloc_upgrade.dart';
 
 
 class PostsListPage extends StatelessWidget {
@@ -13,20 +13,37 @@ class PostsListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('List of Posts'),
       ),
-      body: BlocBuilder<PostsListCubit, List<PostTypicode>>(
-        builder: (context, posts) {
-          if (posts.isEmpty) {
-            return Center(child: CircularProgressIndicator());
+      body: BlocBuilder<PostsListBloc, PostsState>(
+        builder: (context, postsState) {
+          switch (postsState.runtimeType) {
+            case LoadingPostsState: {
+              return Center(child: CircularProgressIndicator());
+            }
+            case LoadedPostsState: {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<PostsListBloc>().add(PullToRefreshEvent());
+                },
+                child: ListView.builder(
+                  itemCount: (postsState as LoadedPostsState).posts.length,
+                    itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(postsState.posts[index].title),
+                      subtitle: Text(postsState.posts[index].body),
+                    ),
+                  );
+                }),
+              );
+            }
+            case FailedToLoadPostsState: {
+              return Center(
+                child: Text('Error Occurred : ${(postsState as FailedToLoadPostsState).error}'),
+              );
+            }
           }
 
-          return ListView.builder(itemBuilder: (context, index) {
-            return Card(
-              child: ListTile(
-                title: Text(posts[index].title),
-                subtitle: Text(posts[index].body),
-              ),
-            );
-          });
+          return Container();
         },
       ),
     );
