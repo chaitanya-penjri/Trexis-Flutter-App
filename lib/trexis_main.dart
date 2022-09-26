@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_trexis_app/network/posts_list_bloc_upgrade.dart';
+import 'package:flutter_trexis_app/blocs/posts_list_bloc_upgrade.dart';
+import 'package:flutter_trexis_app/cubits/navigation_cubit.dart';
+import 'package:flutter_trexis_app/navigation/bloc_cubit_navigator.dart';
 import 'package:flutter_trexis_app/pages/counter_page_bloc_cubit.dart';
 import 'package:flutter_trexis_app/pages/job_home_page.dart';
 import 'package:flutter_trexis_app/pages/list_grid_tabs_page.dart';
@@ -19,12 +21,17 @@ class TrexisApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BlocProvider<PostsListBloc>(
-        create: (context) => PostsListBloc()..add(LoadPostsEvent()),
-        child: PostsListPage(),
-      )
-    );
+        debugShowCheckedModeBanner: false,
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<PostsListBloc>(
+              create: (context) => PostsListBloc()..add(LoadPostsEvent()),
+            ),
+            BlocProvider<NavigationCubit>(
+              create: (context) => NavigationCubit(null),
+            ),
+          ],
+          child: BlocCubitNavigator(),
+        ));
   }
 }
-
